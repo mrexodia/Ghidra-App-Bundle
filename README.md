@@ -16,35 +16,31 @@ Click one of the CI pipeline buttons above to download the prebuilt bundles.
 Building is simple, the quickest way to get started is to run `./update.py --dmg`. This will download the latest Ghidra from Github.
 
 ```bash
-pip3 install -r requirements.txt
-./update.py --dmg
+uv run update.py --dmg
 open Ghidra*.dmg
 ```
 
 To install a specific version you can specify a version on the command line, or a URL/local path.
 
 ```bash
-pip3 install -r requirements.txt
-./update.py --list-versions
+uv run update.py --list-versions
 # A list of versions will be printed
-./update.py --dmg --version "10.0.1"
+uv run update.py --dmg --version "10.0.1"
 ```
 
 To install a specific version from a custom URL:
 
 ```bash
-pip3 install -r requirements.txt
-./update.py --dmg --version "9.2.2" --url "https://ghidra-sre.org/ghidra_9.2.2_PUBLIC_20201229.zip"
+uv run update.py --dmg --version "9.2.2" --url "https://ghidra-sre.org/ghidra_9.2.2_PUBLIC_20201229.zip"
 open Ghidra*.dmg
 ```
 
-### Embedding OpenJDK
+### Embedding the JDK
 
-To embed OpenJDK into the bundle, first download the appropriate [OpenJDK](https://jdk.java.net/19/) for your platform and then use the following command:
+To embed the JDK into the bundle, first download the appropriate [JDK](https://adoptium.net/temurin/releases?version=21&os=any&arch=any) for your platform and then use the following command:
 
 ```bash
-pip3 install -r requirements.txt
-./update.py --dmg --jdk ~/Downloads/jdk-19.0.2.jdk/Contents/Home
+uv run update.py --dmg --jdk ~/Downloads/jdk-21.0.10+7/Contents/Home
 ```
 
 ### Experimental Python3 (and more!) with Graal and Ghidraal
@@ -52,11 +48,11 @@ pip3 install -r requirements.txt
 Building a bundle with:
 
 ```sh
-./update.py --graal
+uv run update.py --graal
 ```
 
 builds Ghidra and bundles the [GraalVM](https://www.graalvm.org), a
-drop in replacement for OpenJDK that provides experimental polyglot support for
+drop in replacement for the JDK that provides experimental polyglot support for
 Python3, R, NodeJS, etc. It also installs the [Ghidraal extension](https://github.com/jpleasu/ghidraal)
 which installs scripting support for a number of GraalVM supported languages.
 

@@ -1,1 +1,0 @@
-Ghidra.app/Contents/Resources/requirements.txt

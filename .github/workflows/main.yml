@@ -3,9 +3,9 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
   schedule:
     # Weekly
     - cron: '0 0 * * 0'
@@ -14,21 +14,26 @@ on:
 jobs:
   package:
     name: "Package Ghidra"
-    container: python:3.7-alpine
+    container: python:3.10-alpine
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
       - name: Install CDR kit to create Disk Images
         shell: sh
         run: apk add cdrkit
       - name: Install dependencies
         shell: sh
-        run: pip install -r requirements.txt
+        run: pip install .
+      - name: Download and extract JDK
+        shell: sh
+        run: |
+          wget https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.10_7.tar.gz
+          tar -xzf OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.10_7.tar.gz
+          mv jdk-21.0.10+7 jdk
       - name: Download and package Ghidra
         shell: sh
-        run: ./update.py --dmg
+        run: ./update.py --dmg --jdk jdk
       - name: "Upload package"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v6
         with:
           path: "*.dmg"
-
